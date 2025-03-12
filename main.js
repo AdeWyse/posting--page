@@ -2,7 +2,7 @@ const postForm = document.querySelector("#postForm");
 const titulo = document.querySelector("#titulo");
 const conteudo = document.querySelector("#conteudo");
 const postsContainer = document.querySelector("#output-lado");
-
+let novoId = 0;
 
 function verificarPosts() {
     if (postsContainer.children.length === 0) {
@@ -32,11 +32,17 @@ postForm.addEventListener("submit", async (e) => {
         });
 
         const result = await response.json();
-
+        
+        if(postsContainer.children.length <= 2){
+            novoId += 1
+        }else {
+            novoId = postsContainer.children.length
+        }
         const postElement = document.createElement("div");
         postElement.classList.add("post");
+        postElement.id = `post-${novoId}`;
         postElement.innerHTML = `<hr><h2>${result.title}</h2><p>${result.body}</p>`;
-
+    
         postsContainer.prepend(postElement);
 
 
